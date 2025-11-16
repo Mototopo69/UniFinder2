@@ -1,0 +1,10 @@
+<div class="card">
+  <p><strong>Paese:</strong> {{ country }}</p>
+  <p><strong>Dominio:</strong> {{ domain }}</p>
+  <p><strong>Nome università:</strong> {{ name }}</p>
+  <p><strong>Sito web:</strong>
+    <a [href]="'https://' + website" target="_blank" rel="noopener noreferrer">
+      {{ website }}
+    </a>
+  </p>
+</div>

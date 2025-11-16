@@ -1,0 +1,34 @@
+<header class="top-bar">
+  <div class="top-bar-inner">
+    <div class="logo">
+      <span class="logo-uni">Uni</span><span class="logo-finder">Finder</span>
+    </div>
+  </div>
+</header>
+
+<div class="search-wrapper">
+  <div class="search-bar">
+    <input
+      type="text"
+      class="search-input"
+      placeholder="Cerca la tua università"
+      [(ngModel)]="searchTerm"
+      (keyup.enter)="onSearchClick()"
+    />
+
+    <select
+      class="country-select"
+      [(ngModel)]="selectedCountry"
+      (change)="onCountryChange()"
+    >
+      <option value="">Paese</option>
+      <option *ngFor="let c of countries" [value]="c">
+        {{ c }}
+      </option>
+    </select>
+
+    <button class="search-button" (click)="onSearchClick()">
+      CERCA
+    </button>
+  </div>
+</div>

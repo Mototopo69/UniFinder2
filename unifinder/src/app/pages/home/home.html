@@ -1,0 +1,18 @@
+<app-header (search)="onSearch($event)"></app-header>
+
+<section class="hero">
+  <h1>
+    <span class="red">Find</span> your future, one
+    <span class="red">university</span> at a time
+  </h1>
+</section>
+
+<section class="cards-container">
+  <app-university-card
+    *ngFor="let uni of universities"
+    [country]="uni.country"
+    [domain]="uni.domain"
+    [name]="uni.name"
+    [website]="uni.website">
+  </app-university-card>
+</section>

@@ -1,0 +1,33 @@
+/* ===== HERO (frase catchy centrata) ===== */
+.hero {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  margin-top: 40px;
+  padding: 0 20px;
+}
+
+.hero h1 {
+  font-size: 32px;
+  font-weight: 700;
+  text-align: center;
+  max-width: 900px;
+  font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
+}
+
+.hero .red {
+  color: #ff0000;
+}
+
+.cards-container {
+  max-width: 1300px;
+  margin: 40px auto 80px auto;
+  padding: 0 20px;
+
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+
+  gap: 35px; /* DISTANZA UGUALE TRA TUTTE LE CARD */
+}
+

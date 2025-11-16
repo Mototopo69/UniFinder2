@@ -1,0 +1,10 @@
+{
+  "/api/universities": {
+    "target": "http://universities.hipolabs.com",
+    "secure": false,
+    "changeOrigin": true,
+    "pathRewrite": {
+      "^/api/universities": ""
+    }
+  }
+}
