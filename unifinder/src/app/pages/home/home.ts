@@ -20,32 +20,30 @@ export class HomeComponent implements OnInit {
     website: string;
   }[] = [];
 
+  noResults: boolean = false; // ✅ MESSAGGIO
+
   // 👉 paginazione
   page = 1;
-  pageSize = 6; // quante card per pagina
+  pageSize = 6;
 
   constructor(private universityService: UniversityService) {}
 
   ngOnInit(): void {
-    // stato iniziale: tutte le università d'Italia
     this.loadUniversities('Italy');
   }
 
-  // chiamato da CERCA (header)
   onSearch(criteria: { country: string; name: string }): void {
     const country = criteria.country || 'Italy';
     const name = criteria.name?.trim() || '';
     this.loadUniversities(country, name);
   }
 
-  // chiamato da RESET (header)
   resetFilters(): void {
     this.loadUniversities('Italy');
   }
 
   private loadUniversities(country: string, name?: string): void {
-    // ogni volta che ricarico i dati riparto dalla pagina 1
-    this.page = 1;
+    this.page = 1; // reset pagina
 
     this.universityService.searchUniversities(country, name).subscribe({
       next: (data: ApiUniversity[]) => {
@@ -55,15 +53,16 @@ export class HomeComponent implements OnInit {
           name: u.name,
           website: (u.web_pages?.[0] || '').replace(/^https?:\/\//, '')
         }));
+
+        this.noResults = this.universities.length === 0; // ✅ MESSAGGIO
       },
       error: (err: unknown) => {
         console.error('Errore nel caricamento delle università', err);
         this.universities = [];
+        this.noResults = true; // ✅ MESSAGGIO
       }
     });
   }
-
-  // ====== PAGINAZIONE ======
 
   get totalPages(): number {
     if (this.universities.length === 0) {
@@ -90,3 +89,4 @@ export class HomeComponent implements OnInit {
     }
   }
 }
+

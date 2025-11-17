@@ -1,46 +1,52 @@
 import { Component, EventEmitter, Output } from '@angular/core';
 import { FormsModule } from '@angular/forms';
-import { NgFor } from '@angular/common';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'app-header',
   standalone: true,
-  imports: [FormsModule, NgFor],
+  imports: [FormsModule, CommonModule],
   templateUrl: './header.html',
   styleUrl: './header.scss'
 })
 export class HeaderComponent {
+  @Output() search = new EventEmitter<{ term: string; country: string }>();
+  @Output() reset = new EventEmitter<void>();
 
-  searchTerm = '';
-  selectedCountry = 'Italy';
-
-  countries = [
-    'Italy', 'United Kingdom', 'United States',
-    'France', 'Germany', 'Spain', 'Portugal',
-    'Netherlands', 'Sweden', 'Norway', 'Finland',
-    'Switzerland', 'Poland', 'Canada', 'Australia'
+  searchTerm: string = '';
+  selectedCountry: string = 'All';
+  
+  countries: string[] = [
+    'All',
+    'Italy',
+    'United States',
+    'United Kingdom',
+    'Germany',
+    'France',
+    'Spain',
+    'Canada',
+    'Australia',
+    // aggiungi altri paesi se necessario
   ];
-
-  @Output() search = new EventEmitter<{ country: string; name: string }>();
-  @Output() reset = new EventEmitter<void>(); // 👈 nuovo evento
 
   onSearchClick(): void {
     this.search.emit({
-      country: this.selectedCountry,
-      name: this.searchTerm
+      term: this.searchTerm,
+      country: this.selectedCountry
     });
   }
 
   onCountryChange(): void {
-    if (!this.searchTerm.trim()) {
-      this.onSearchClick();
-    }
+    this.search.emit({
+      term: this.searchTerm,
+      country: this.selectedCountry
+    });
   }
 
-  // chiamato dal bottone RESET vicino a CERCA
+  // QUESTO È IL METODO CHE MANCAVA!
   onResetClick(): void {
     this.searchTerm = '';
-    this.selectedCountry = 'Italy';
+    this.selectedCountry = 'All';
     this.reset.emit();
   }
 }

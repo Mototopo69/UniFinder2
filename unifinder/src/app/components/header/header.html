@@ -4,38 +4,34 @@
       <span class="logo-uni">Uni</span><span class="logo-finder">Finder</span>
     </div>
   </div>
-<div class="search-wrapper">
-  <div class="search-bar">
-    <input
-      type="text"
-      class="search-input"
-      placeholder="Cerca la tua università"
-      [(ngModel)]="searchTerm"
-      (keyup.enter)="onSearchClick()"
-    />
+  
+  <div class="search-wrapper">
+    <div class="search-bar">
+      <input
+        type="text"
+        class="search-input"
+        placeholder="Cerca la tua università"
+        [(ngModel)]="searchTerm"
+        (keyup.enter)="onSearchClick()"
+      />
 
-    <select
-      class="country-select"
-      [(ngModel)]="selectedCountry"
-      (change)="onCountryChange()"
-    >
-      <option *ngFor="let c of countries" [value]="c">
-        {{ c }}
-      </option>
-    </select>
+      <select
+        class="country-select"
+        [(ngModel)]="selectedCountry"
+        (change)="onCountryChange()"
+      >
+        <option *ngFor="let c of countries" [value]="c">
+          {{ c }}
+        </option>
+      </select>
 
-    <!-- 👇 Bottone RESET affianco -->
-    <button class="reset-button" (click)="onResetClick()">
-      RESET
-    </button>
-
-    <button class="search-button" (click)="onSearchClick()">
-      CERCA
-    </button>
-
-
+      <button class="reset-button" (click)="onResetClick()">
+        RESET
+      </button>
+      
+      <button class="search-button" (click)="onSearchClick()">
+        CERCA
+      </button>
+    </div>
   </div>
 </header>
-
-
-</div>

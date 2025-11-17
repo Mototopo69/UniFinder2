@@ -1,29 +1,211 @@
 .card {
-  background: #d1d1d1;
-  padding: 24px;
-  border-radius: 18px;
-  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.12);
+  background: #ffffff;
+  padding: 32px;
+  border-radius: 24px;
+  box-shadow: 0 4px 20px rgba(0, 0, 0, 0.08);
   font-size: 15px;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
-  line-height: 1.5;
-
-  /* per farle riempire bene le celle della griglia */
+  line-height: 1.7;
   height: 100%;
   box-sizing: border-box;
+  transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+  position: relative;
+  overflow: hidden;
+  border: 2px solid #f3f4f6;
 }
 
+/* Barra colorata superiore */
+.card::before {
+  content: '';
+  position: absolute;
+  top: 0;
+  left: 0;
+  right: 0;
+  height: 6px;
+  background: linear-gradient(90deg, #0033a0 0%, #0047cc 60%, #ff0000 100%);
+}
+
+/* Effetto glow su hover */
+.card::after {
+  content: '';
+  position: absolute;
+  top: -100%;
+  left: -100%;
+  width: 300%;
+  height: 300%;
+  background: radial-gradient(circle, rgba(0, 51, 160, 0.05) 0%, transparent 70%);
+  opacity: 0;
+  transition: opacity 0.5s ease;
+  pointer-events: none;
+}
+
+.card:hover {
+  transform: translateY(-12px);
+  box-shadow: 0 24px 48px rgba(0, 51, 160, 0.2);
+  border-color: rgba(0, 51, 160, 0.25);
+}
+
+.card:hover::after {
+  opacity: 1;
+}
+
+/* Ogni paragrafo */
 .card p {
-  margin: 4px 0;
+  margin: 12px 0;
+  position: relative;
+  z-index: 1;
+  color: #374151;
 }
 
+.card p:first-child {
+  margin-top: 0;
+}
+
+.card p:last-child {
+  margin-bottom: 0;
+}
+
+/* Label (strong) - stile moderno */
+.card strong {
+  color: #0033a0;
+  font-weight: 700;
+  font-size: 12px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  display: inline-block;
+  margin-right: 8px;
+}
+
+/* Icone per ogni campo */
+.card p:nth-child(1) strong::before {
+  content: '🌍 ';
+  font-size: 16px;
+}
+
+.card p:nth-child(2) strong::before {
+  content: '🔗 ';
+  font-size: 16px;
+}
+
+.card p:nth-child(3) strong::before {
+  content: '🎓 ';
+  font-size: 16px;
+}
+
+.card p:nth-child(4) strong::before {
+  content: '🌐 ';
+  font-size: 16px;
+}
+
+/* Nome università - più prominente */
+.card p:nth-child(3) {
+  font-size: 18px;
+  font-weight: 700;
+  color: #1f2937;
+  background: linear-gradient(135deg, #f0f7ff 0%, transparent 100%);
+  padding: 16px;
+  margin: 16px -32px;
+  border-left: 4px solid #0033a0;
+}
+
+/* Link - stile bottone */
 .card a {
   text-decoration: none;
+  color: #ff0000;
+  font-weight: 700;
+  transition: all 0.3s ease;
+  position: relative;
+  display: inline-flex;
+  align-items: center;
+  gap: 8px;
+  word-break: break-word;
+  padding: 12px 24px;
+  background: linear-gradient(135deg, #fff0f0 0%, #ffe8e8 100%);
+  border-radius: 12px;
+  border: 2px solid #ffd4d4;
+  margin-top: 8px;
 }
 
-/* su schermi piccoli aumenta un filo il padding per non stare attaccate al bordo */
+.card a::after {
+  content: '→';
+  font-size: 20px;
+  transition: transform 0.3s ease;
+}
+
+.card a:hover {
+  background: linear-gradient(135deg, #ff0000 0%, #cc0000 100%);
+  color: white;
+  border-color: #ff0000;
+  box-shadow: 0 6px 20px rgba(255, 0, 0, 0.3);
+  transform: translateX(4px);
+}
+
+.card a:hover::after {
+  transform: translateX(4px);
+}
+
+/* Animazione shimmer sulla barra superiore */
+.card:hover::before {
+  animation: shimmer 2s ease-in-out infinite;
+  background-size: 200% 100%;
+}
+
+@keyframes shimmer {
+  0% {
+    background-position: -200% 0;
+  }
+  100% {
+    background-position: 200% 0;
+  }
+}
+
+/* Responsive */
 @media (max-width: 600px) {
   .card {
-    padding: 20px;
+    padding: 28px;
+    font-size: 14px;
+  }
+
+  .card strong {
+    font-size: 11px;
+    display: block;
+    margin-bottom: 4px;
+  }
+
+  .card p:nth-child(3) {
+    font-size: 16px;
+    padding: 14px;
+    margin: 12px -28px;
+  }
+
+  .card a {
+    padding: 10px 20px;
     font-size: 14px;
   }
 }
+
+/* Animazione entrata */
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(30px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.card {
+  animation: fadeInUp 0.6s ease backwards;
+}
+
+.card:nth-child(1) { animation-delay: 0.05s; }
+.card:nth-child(2) { animation-delay: 0.1s; }
+.card:nth-child(3) { animation-delay: 0.15s; }
+.card:nth-child(4) { animation-delay: 0.2s; }
+.card:nth-child(5) { animation-delay: 0.25s; }
+.card:nth-child(6) { animation-delay: 0.3s; }
+.card:nth-child(7) { animation-delay: 0.35s; }
+.card:nth-child(8) { animation-delay: 0.4s; }
+.card:nth-child(9) { animation-delay: 0.45s; }

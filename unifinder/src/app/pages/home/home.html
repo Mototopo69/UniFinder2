@@ -17,6 +17,11 @@
   </app-university-card>
 </section>
 
+<!-- 🔥 MESSAGGIO QUANDO NON CI SONO RISULTATI -->
+<div *ngIf="noResults" class="no-results">
+  Nessuna università trovata.
+</div>
+
 <!-- PAGINAZIONE -->
 <div class="pagination" *ngIf="universities.length > pageSize">
   <button (click)="prevPage()" [disabled]="page === 1">
