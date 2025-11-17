@@ -20,30 +20,44 @@ export class HomeComponent implements OnInit {
     website: string;
   }[] = [];
 
-  noResults: boolean = false; // ✅ MESSAGGIO
+  noResults: boolean = false;
 
-  // 👉 paginazione
+  // PAGINAZIONE
   page = 1;
   pageSize = 6;
 
   constructor(private universityService: UniversityService) {}
 
   ngOnInit(): void {
+    // stato iniziale: Italia
     this.loadUniversities('Italy');
   }
 
+  // RICEVE L'EVENTO DI CERCA DALL'HEADER
   onSearch(criteria: { country: string; name: string }): void {
-    const country = criteria.country || 'Italy';
+    let country = criteria.country || 'All';
     const name = criteria.name?.trim() || '';
+
+    // 👉 Se l'utente ha selezionato "All" ma non ha scritto niente,
+    // carichiamo l'Italia come default così NON resta vuoto
+    if (country === 'All' && !name) {
+      country = 'Italy';
+    }
+
     this.loadUniversities(country, name);
   }
 
+  // RESET DAL BOTTONE RESET DELL'HEADER
   resetFilters(): void {
-    this.loadUniversities('Italy');
+    this.page = 1;
+    this.noResults = false;
+    // torniamo al default: tutte le uni italiane
+    this.loadUniversities('Italy', '');
   }
 
+  // CHIAMATA API
   private loadUniversities(country: string, name?: string): void {
-    this.page = 1; // reset pagina
+    this.page = 1;
 
     this.universityService.searchUniversities(country, name).subscribe({
       next: (data: ApiUniversity[]) => {
@@ -54,21 +68,20 @@ export class HomeComponent implements OnInit {
           website: (u.web_pages?.[0] || '').replace(/^https?:\/\//, '')
         }));
 
-        this.noResults = this.universities.length === 0; // ✅ MESSAGGIO
+        this.noResults = this.universities.length === 0;
       },
-      error: (err: unknown) => {
-        console.error('Errore nel caricamento delle università', err);
+      error: () => {
         this.universities = [];
-        this.noResults = true; // ✅ MESSAGGIO
+        this.noResults = true;
       }
     });
   }
 
+  // PAGINAZIONE
   get totalPages(): number {
-    if (this.universities.length === 0) {
-      return 1;
-    }
-    return Math.ceil(this.universities.length / this.pageSize);
+    return this.universities.length === 0
+      ? 1
+      : Math.ceil(this.universities.length / this.pageSize);
   }
 
   get paginatedUniversities() {
@@ -78,15 +91,10 @@ export class HomeComponent implements OnInit {
   }
 
   nextPage(): void {
-    if (this.page < this.totalPages) {
-      this.page++;
-    }
+    if (this.page < this.totalPages) this.page++;
   }
 
   prevPage(): void {
-    if (this.page > 1) {
-      this.page--;
-    }
+    if (this.page > 1) this.page--;
   }
 }
-

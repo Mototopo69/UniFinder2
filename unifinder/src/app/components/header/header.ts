@@ -10,11 +10,11 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.scss'
 })
 export class HeaderComponent {
-  @Output() search = new EventEmitter<{ term: string; country: string }>();
+  @Output() search = new EventEmitter<{ name: string; country: string }>();
   @Output() reset = new EventEmitter<void>();
 
   searchTerm: string = '';
-  selectedCountry: string = 'All';
+  selectedCountry: string = 'Italy';
   
   countries: string[] = [
     'All',
@@ -25,28 +25,26 @@ export class HeaderComponent {
     'France',
     'Spain',
     'Canada',
-    'Australia',
-    // aggiungi altri paesi se necessario
+    'Australia'
   ];
 
   onSearchClick(): void {
     this.search.emit({
-      term: this.searchTerm,
+      name: this.searchTerm,
       country: this.selectedCountry
     });
   }
 
   onCountryChange(): void {
     this.search.emit({
-      term: this.searchTerm,
+      name: this.searchTerm,
       country: this.selectedCountry
     });
   }
 
-  // QUESTO È IL METODO CHE MANCAVA!
   onResetClick(): void {
     this.searchTerm = '';
-    this.selectedCountry = 'All';
+    this.selectedCountry = 'Italy';
     this.reset.emit();
   }
 }
