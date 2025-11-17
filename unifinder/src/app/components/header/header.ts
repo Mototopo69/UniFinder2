@@ -14,25 +14,15 @@ export class HeaderComponent {
   searchTerm = '';
   selectedCountry = 'Italy';
 
-  countries: string[] = [
-    'Italy',
-    'United Kingdom',
-    'United States',
-    'France',
-    'Germany',
-    'Spain',
-    'Portugal',
-    'Netherlands',
-    'Sweden',
-    'Norway',
-    'Finland',
-    'Switzerland',
-    'Poland',
-    'Canada',
-    'Australia'
+  countries = [
+    'Italy', 'United Kingdom', 'United States',
+    'France', 'Germany', 'Spain', 'Portugal',
+    'Netherlands', 'Sweden', 'Norway', 'Finland',
+    'Switzerland', 'Poland', 'Canada', 'Australia'
   ];
 
   @Output() search = new EventEmitter<{ country: string; name: string }>();
+  @Output() reset = new EventEmitter<void>(); // 👈 nuovo evento
 
   onSearchClick(): void {
     this.search.emit({
@@ -42,9 +32,15 @@ export class HeaderComponent {
   }
 
   onCountryChange(): void {
-    // Se il campo di ricerca è vuoto, cerca tutte le università del paese selezionato
     if (!this.searchTerm.trim()) {
       this.onSearchClick();
     }
+  }
+
+  // chiamato dal bottone RESET vicino a CERCA
+  onResetClick(): void {
+    this.searchTerm = '';
+    this.selectedCountry = 'Italy';
+    this.reset.emit();
   }
 }

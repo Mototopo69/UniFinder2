@@ -4,8 +4,6 @@
       <span class="logo-uni">Uni</span><span class="logo-finder">Finder</span>
     </div>
   </div>
-</header>
-
 <div class="search-wrapper">
   <div class="search-bar">
     <input
@@ -21,14 +19,23 @@
       [(ngModel)]="selectedCountry"
       (change)="onCountryChange()"
     >
-      <option value="">Paese</option>
       <option *ngFor="let c of countries" [value]="c">
         {{ c }}
       </option>
     </select>
 
+    <!-- 👇 Bottone RESET affianco -->
+    <button class="reset-button" (click)="onResetClick()">
+      RESET
+    </button>
+
     <button class="search-button" (click)="onSearchClick()">
       CERCA
     </button>
+
+
   </div>
+</header>
+
+
 </div>

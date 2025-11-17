@@ -1,4 +1,4 @@
-<app-header (search)="onSearch($event)"></app-header>
+<app-header (search)="onSearch($event)" (reset)="resetFilters()"></app-header>
 
 <section class="hero">
   <h1>
@@ -9,10 +9,25 @@
 
 <section class="cards-container">
   <app-university-card
-    *ngFor="let uni of universities"
+    *ngFor="let uni of paginatedUniversities"
     [country]="uni.country"
     [domain]="uni.domain"
     [name]="uni.name"
     [website]="uni.website">
   </app-university-card>
 </section>
+
+<!-- PAGINAZIONE -->
+<div class="pagination" *ngIf="universities.length > pageSize">
+  <button (click)="prevPage()" [disabled]="page === 1">
+    ‹ Precedente
+  </button>
+
+  <span class="page-info">
+    Pagina {{ page }} di {{ totalPages }}
+  </span>
+
+  <button (click)="nextPage()" [disabled]="page === totalPages">
+    Successiva ›
+  </button>
+</div>
