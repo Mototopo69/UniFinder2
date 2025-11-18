@@ -20,42 +20,56 @@ export class HomeComponent implements OnInit {
     website: string;
   }[] = [];
 
+  favorites: {
+    country: string;
+    domain: string;
+    name: string;
+    website: string;
+  }[] = [];
+
   noResults: boolean = false;
 
   // PAGINAZIONE
   page = 1;
   pageSize = 6;
 
+  showingFavorites = false;
+
   constructor(private universityService: UniversityService) {}
 
   ngOnInit(): void {
-    // stato iniziale: Italia
+    // default: Italia
     this.loadUniversities('Italy');
   }
 
-  // RICEVE L'EVENTO DI CERCA DALL'HEADER
+  // 🔎 RICERCA UNIVERSITÀ
   onSearch(criteria: { country: string; name: string }): void {
-    let country = criteria.country || 'All';
+    const country = criteria.country || 'All';
     const name = criteria.name?.trim() || '';
 
-    // 👉 Se l'utente ha selezionato "All" ma non ha scritto niente,
-    // carichiamo l'Italia come default così NON resta vuoto
-    if (country === 'All' && !name) {
-      country = 'Italy';
-    }
-
+    this.showingFavorites = false;
     this.loadUniversities(country, name);
   }
 
-  // RESET DAL BOTTONE RESET DELL'HEADER
+  // 🔄 RESET FILTRI
   resetFilters(): void {
     this.page = 1;
     this.noResults = false;
-    // torniamo al default: tutte le uni italiane
-    this.loadUniversities('Italy', '');
+    this.showingFavorites = false;
+    this.loadUniversities('Italy');
   }
 
-  // CHIAMATA API
+  // ❤️ MOSTRA PREFERITI
+  onShowFavorites(): void {
+    this.showingFavorites = true;
+  }
+
+  // ⬅ TORNA ALLA HOME
+  onBackHome(): void {
+    this.showingFavorites = false;
+  }
+
+  // 📡 CHIAMATA API
   private loadUniversities(country: string, name?: string): void {
     this.page = 1;
 
@@ -79,22 +93,37 @@ export class HomeComponent implements OnInit {
 
   // PAGINAZIONE
   get totalPages(): number {
-    return this.universities.length === 0
-      ? 1
-      : Math.ceil(this.universities.length / this.pageSize);
+    const list = this.currentList;
+    return list.length === 0 ? 1 : Math.ceil(list.length / this.pageSize);
+  }
+
+  get currentList() {
+    return this.showingFavorites ? this.favorites : this.universities;
   }
 
   get paginatedUniversities() {
+    const list = this.currentList;
     const startIndex = (this.page - 1) * this.pageSize;
-    const endIndex = startIndex + this.pageSize;
-    return this.universities.slice(startIndex, endIndex);
+    return list.slice(startIndex, startIndex + this.pageSize);
   }
 
   nextPage(): void {
-    if (this.page < this.totalPages) this.page++;
+    if (this.page < this.totalPages) {
+      this.page++;
+    }
   }
 
   prevPage(): void {
-    if (this.page > 1) this.page--;
+    if (this.page > 1) {
+      this.page--;
+    }
   }
+
+  // ❤️ AGGIUNGI AI PREFERITI (richiamalo dalla card)
+  addToFavorites(uni: any): void {
+    if (!this.favorites.some(f => f.name === uni.name)) {
+      this.favorites.push(uni);
+    }
+  }
+  
 }

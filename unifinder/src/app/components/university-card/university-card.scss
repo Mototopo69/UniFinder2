@@ -12,6 +12,8 @@
   position: relative;
   overflow: hidden;
   border: 2px solid #f3f4f6;
+  display: flex;
+  flex-direction: column;
 }
 
 /* Barra colorata superiore */
@@ -78,17 +80,17 @@
 
 /* Icone per ogni campo */
 .card p:nth-child(1) strong::before {
-  content: '🌍 ';
+  content: '🎓 ';
   font-size: 16px;
 }
 
 .card p:nth-child(2) strong::before {
-  content: '🔗 ';
+  content: '🌍 ';
   font-size: 16px;
 }
 
 .card p:nth-child(3) strong::before {
-  content: '🎓 ';
+  content: '🔗 ';
   font-size: 16px;
 }
 
@@ -98,13 +100,13 @@
 }
 
 /* Nome università - più prominente */
-.card p:nth-child(3) {
+.card p:nth-child(1) {
   font-size: 18px;
   font-weight: 700;
   color: #1f2937;
   background: linear-gradient(135deg, #f0f7ff 0%, transparent 100%);
   padding: 16px;
-  margin: 16px -32px;
+  margin: 0 -32px 16px -32px;
   border-left: 4px solid #0033a0;
 }
 
@@ -124,6 +126,7 @@
   border-radius: 12px;
   border: 2px solid #ffd4d4;
   margin-top: 8px;
+  z-index: 1;
 }
 
 .card a::after {
@@ -142,6 +145,61 @@
 
 .card a:hover::after {
   transform: translateX(4px);
+}
+
+/* ===== BOTTONE PREFERITI - DESIGN PREMIUM ===== */
+.favorite-button {
+  margin-top: auto;
+  padding: 12px 24px;
+  font-size: 14px;
+  border-radius: 12px;
+  border: 2px solid #fbbf24;
+  background: linear-gradient(135deg, #fef3c7 0%, #fde68a 100%);
+  color: #92400e;
+  cursor: pointer;
+  font-weight: 700;
+  letter-spacing: 0.5px;
+  transition: all 0.3s ease;
+  position: relative;
+  z-index: 1;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 8px;
+  box-shadow: 0 4px 12px rgba(251, 191, 36, 0.2);
+}
+
+.favorite-button::before {
+  content: '⭐';
+  font-size: 18px;
+  transition: transform 0.3s ease;
+}
+
+.favorite-button:hover {
+  background: linear-gradient(135deg, #fbbf24 0%, #f59e0b 100%);
+  border-color: #f59e0b;
+  color: #ffffff;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 20px rgba(251, 191, 36, 0.4);
+}
+
+.favorite-button:hover::before {
+  transform: scale(1.2) rotate(15deg);
+}
+
+.favorite-button:active {
+  transform: translateY(0);
+}
+
+/* Stato "aggiunto ai preferiti" */
+.favorite-button.added {
+  background: linear-gradient(135deg, #10b981 0%, #059669 100%);
+  border-color: #059669;
+  color: white;
+}
+
+.favorite-button.added::before {
+  content: '✓';
 }
 
 /* Animazione shimmer sulla barra superiore */
@@ -172,15 +230,20 @@
     margin-bottom: 4px;
   }
 
-  .card p:nth-child(3) {
+  .card p:nth-child(1) {
     font-size: 16px;
     padding: 14px;
-    margin: 12px -28px;
+    margin: 0 -28px 14px -28px;
   }
 
   .card a {
     padding: 10px 20px;
     font-size: 14px;
+  }
+
+  .favorite-button {
+    padding: 10px 20px;
+    font-size: 13px;
   }
 }
 

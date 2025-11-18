@@ -10,12 +10,14 @@ import { CommonModule } from '@angular/common';
   styleUrl: './header.scss'
 })
 export class HeaderComponent {
-  @Output() search = new EventEmitter<{ name: string; country: string }>();
+  @Output() search = new EventEmitter<{ country: string; name: string }>();
   @Output() reset = new EventEmitter<void>();
+  @Output() showFavorites = new EventEmitter<void>();
+  @Output() backHome = new EventEmitter<void>();
 
   searchTerm: string = '';
   selectedCountry: string = 'Italy';
-  
+  showingFavorites: boolean = false;
   countries: string[] = [
     'All',
     'Italy',
@@ -28,6 +30,7 @@ export class HeaderComponent {
     'Australia'
   ];
 
+  // CERCA
   onSearchClick(): void {
     this.search.emit({
       name: this.searchTerm,
@@ -35,6 +38,7 @@ export class HeaderComponent {
     });
   }
 
+  // CAMBIO PAESE
   onCountryChange(): void {
     this.search.emit({
       name: this.searchTerm,
@@ -42,9 +46,21 @@ export class HeaderComponent {
     });
   }
 
+  // RESET
   onResetClick(): void {
     this.searchTerm = '';
     this.selectedCountry = 'Italy';
     this.reset.emit();
+  }
+
+ 
+   onFavoritesClick(): void {
+    this.showingFavorites = true;
+    this.showFavorites.emit();
+  }
+
+  onBackToHomeClick(): void {
+    this.showingFavorites = false;
+    this.backHome.emit();
   }
 }

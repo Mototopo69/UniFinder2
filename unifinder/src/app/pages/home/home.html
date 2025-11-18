@@ -1,6 +1,11 @@
-<app-header (search)="onSearch($event)" (reset)="resetFilters()"></app-header>
+<app-header
+  (search)="onSearch($event)"
+  (reset)="resetFilters()"
+  (showFavorites)="onShowFavorites()"
+  (backHome)="onBackHome()">
+</app-header>
 
-<section class="hero">
+<section class="hero" *ngIf="!showingFavorites">
   <h1>
     <span class="red">Find</span> your future, one
     <span class="red">university</span> at a time
@@ -13,17 +18,18 @@
     [country]="uni.country"
     [domain]="uni.domain"
     [name]="uni.name"
-    [website]="uni.website">
+    [website]="uni.website"
+    (addFavorite)="addToFavorites(uni)">
   </app-university-card>
 </section>
 
 <!-- 🔥 MESSAGGIO QUANDO NON CI SONO RISULTATI -->
-<div *ngIf="noResults" class="no-results">
+<div *ngIf="noResults && !showingFavorites" class="no-results">
   Nessuna università trovata.
 </div>
 
 <!-- PAGINAZIONE -->
-<div class="pagination" *ngIf="universities.length > pageSize">
+<div class="pagination" *ngIf="currentList.length > pageSize">
   <button (click)="prevPage()" [disabled]="page === 1">
     ‹ Precedente
   </button>
