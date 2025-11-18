@@ -28,8 +28,6 @@ export class HomeComponent implements OnInit {
   }[] = [];
 
   noResults: boolean = false;
-
-  // PAGINAZIONE
   page = 1;
   pageSize = 6;
 
@@ -38,20 +36,23 @@ export class HomeComponent implements OnInit {
   constructor(private universityService: UniversityService) {}
 
   ngOnInit(): void {
-    // default: Italia
+    // Default: università italiane
     this.loadUniversities('Italy');
   }
 
-  // 🔎 RICERCA UNIVERSITÀ
+  // 🔎 RICERCA (chiamata dal (search) dell'header)
   onSearch(criteria: { country: string; name: string }): void {
-    const country = criteria.country || 'All';
+    this.showingFavorites = false;
+
+    const rawCountry = criteria.country || 'All';
+    // Se è "All" → niente filtro per paese
+    const country = rawCountry === 'All' ? '' : rawCountry;
     const name = criteria.name?.trim() || '';
 
-    this.showingFavorites = false;
     this.loadUniversities(country, name);
   }
 
-  // 🔄 RESET FILTRI
+  // 🔄 RESET (chiamato dal (reset) dell'header)
   resetFilters(): void {
     this.page = 1;
     this.noResults = false;
@@ -59,14 +60,22 @@ export class HomeComponent implements OnInit {
     this.loadUniversities('Italy');
   }
 
-  // ❤️ MOSTRA PREFERITI
+  // ❤️ MOSTRA SOLO PREFERITI (se lo usi nell'header)
   onShowFavorites(): void {
     this.showingFavorites = true;
+    this.page = 1;
+
+    // se usi un servizio esterno per i preferiti,
+    // qui potresti ricaricarli da lì.
+    // per ora usiamo l'array "favorites" locale.
+    this.noResults = this.favorites.length === 0;
   }
 
-  // ⬅ TORNA ALLA HOME
+  // ⬅ TORNA ALLA LISTA NORMALE
   onBackHome(): void {
     this.showingFavorites = false;
+    this.page = 1;
+    this.noResults = this.universities.length === 0;
   }
 
   // 📡 CHIAMATA API
@@ -82,23 +91,27 @@ export class HomeComponent implements OnInit {
           website: (u.web_pages?.[0] || '').replace(/^https?:\/\//, '')
         }));
 
-        this.noResults = this.universities.length === 0;
+        if (!this.showingFavorites) {
+          this.noResults = this.universities.length === 0;
+        }
       },
       error: () => {
         this.universities = [];
-        this.noResults = true;
+        if (!this.showingFavorites) {
+          this.noResults = true;
+        }
       }
     });
   }
 
-  // PAGINAZIONE
+  // ===== LISTA CORRENTE (normale o preferiti) =====
+  get currentList() {
+    return this.showingFavorites ? this.favorites : this.universities;
+  }
+
   get totalPages(): number {
     const list = this.currentList;
     return list.length === 0 ? 1 : Math.ceil(list.length / this.pageSize);
-  }
-
-  get currentList() {
-    return this.showingFavorites ? this.favorites : this.universities;
   }
 
   get paginatedUniversities() {
@@ -119,11 +132,14 @@ export class HomeComponent implements OnInit {
     }
   }
 
-  // ❤️ AGGIUNGI AI PREFERITI (richiamalo dalla card)
-  addToFavorites(uni: any): void {
-    if (!this.favorites.some(f => f.name === uni.name)) {
-      this.favorites.push(uni);
+  // ❤️ AGGIUNGI AI PREFERITI (se la card emette addFavorite)
+  addToFavorites(uni: { country: string; domain: string; name: string; website: string }): void {
+    const exists = this.favorites.some(f => f.name === uni.name && f.country === uni.country);
+    if (!exists) {
+      this.favorites.push({ ...uni });
+    } else {
+      // se vuoi toggle: rimuovi se già presente
+      this.favorites = this.favorites.filter(f => !(f.name === uni.name && f.country === uni.country));
     }
   }
-  
 }

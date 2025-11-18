@@ -16,8 +16,10 @@ export class HeaderComponent {
   @Output() backHome = new EventEmitter<void>();
 
   searchTerm: string = '';
-  selectedCountry: string = 'Italy';
+  selectedCountry: string = 'All';
+
   showingFavorites: boolean = false;
+
   countries: string[] = [
     'All',
     'Italy',
@@ -30,31 +32,30 @@ export class HeaderComponent {
     'Australia'
   ];
 
-  // CERCA
   onSearchClick(): void {
+    this.showingFavorites = false;
     this.search.emit({
       name: this.searchTerm,
       country: this.selectedCountry
     });
   }
 
-  // CAMBIO PAESE
   onCountryChange(): void {
+    this.showingFavorites = false;
     this.search.emit({
       name: this.searchTerm,
       country: this.selectedCountry
     });
   }
 
-  // RESET
   onResetClick(): void {
     this.searchTerm = '';
-    this.selectedCountry = 'Italy';
+    this.selectedCountry = 'All';
+    this.showingFavorites = false;
     this.reset.emit();
   }
 
- 
-   onFavoritesClick(): void {
+  onFavoritesClick(): void {
     this.showingFavorites = true;
     this.showFavorites.emit();
   }

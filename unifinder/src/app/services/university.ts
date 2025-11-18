@@ -18,12 +18,16 @@ private baseUrl = '/api/universities/search';
   constructor(private http: HttpClient) {}
 
   searchUniversities(country: string, name?: string): Observable<ApiUniversity[]> {
-    const params: any = { country };
+  const params: any = {};
 
-    if (name && name.trim()) {
-      params.name = name.trim();
-    }
-
-    return this.http.get<ApiUniversity[]>(this.baseUrl, { params });
+  if (country && country.trim() !== '') {
+    params.country = country;
   }
+
+  if (name && name.trim()) {
+    params.name = name.trim();
+  }
+
+  return this.http.get<ApiUniversity[]>(this.baseUrl, { params });
+}
 }
