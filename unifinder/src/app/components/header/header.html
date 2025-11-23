@@ -1,12 +1,16 @@
 <header class="top-bar">
   <div class="top-bar-inner">
+    <!-- Logo cliccabile: torna alla vista home -->
     <div class="logo" (click)="onBackToHomeClick()">
       <span class="logo-uni">Uni</span><span class="logo-finder">Finder</span>
     </div>
   </div>
 
+  <!-- Barra di ricerca visibile solo quando NON sto guardando i preferiti -->
   <div class="search-wrapper" *ngIf="!showingFavorites">
     <div class="search-bar">
+
+      <!-- Input di testo per il nome dell'università -->
       <input
         type="text"
         class="search-input"
@@ -15,32 +19,36 @@
         (keyup.enter)="onSearchClick()"
       />
 
+      <!-- Select per filtrare per paese -->
       <select
         class="country-select"
         [(ngModel)]="selectedCountry"
         (change)="onCountryChange()"
       >
+        <!-- Opzioni generate dall'array countries -->
         <option *ngFor="let c of countries" [value]="c">
           {{ c }}
         </option>
       </select>
 
+      <!-- Bottone per resettare i filtri -->
       <button class="reset-button" (click)="onResetClick()">
         RESET
       </button>
       
+      <!-- Bottone per avviare la ricerca -->
       <button class="search-button" (click)="onSearchClick()">
         CERCA
       </button>
-          <button class="favorites-nav-button" (click)="onFavoritesClick()">
-      Preferiti
-    </button>
+
+      <!-- Bottone per passare alla vista preferiti -->
+      <button class="favorites-nav-button" (click)="onFavoritesClick()">
+        Preferiti
+      </button>
     </div>
-
-
   </div>
 
-  <!-- 🔥 QUANDO SEI NEI PREFERITI MOSTRIAMO SOLO IL BOTTONE TORNA HOME -->
+  <!-- Quando sono nella vista preferiti, mostro solo il bottone per tornare alla home -->
   <div class="search-wrapper" *ngIf="showingFavorites">
     <button class="search-button" (click)="onBackToHomeClick()">
       ← Torna alla Home

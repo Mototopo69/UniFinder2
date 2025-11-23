@@ -1,13 +1,13 @@
-import { Routes } from '@angular/router';
-import { HomeComponent } from './pages/home/home';
+import { Routes } from '@angular/router';                          // tipo Angular per un array di rotte
+import { HomeComponent } from './pages/home/home';                 // componente associato alla home
 
 export const routes: Routes = [
   {
-    path: '',
-    component: HomeComponent
+    path: '',                                                      // URL root (es. '/')
+    component: HomeComponent                                       // mostra HomeComponent quando l'URL è vuoto
   },
   {
-    path: '**',
-    redirectTo: ''
+    path: '**',                                                    // qualsiasi path non definito (wildcard)
+    redirectTo: ''                                                 // reindirizza alla home
   }
 ];

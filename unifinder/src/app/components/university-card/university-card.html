@@ -1,12 +1,21 @@
+<!-- Card che mostra i dati di una singola università -->
 <div class="card">
+  <!-- Nome dell'università -->
   <p><strong>Nome università:</strong> {{ name }}</p>
+
+  <!-- Paese dell'università -->
   <p><strong>Paese:</strong> {{ country }}</p>
+
+  <!-- Dominio principale dell'università -->
   <p><strong>Dominio:</strong> {{ domain }}</p>
+
+  <!-- Link al sito web (aperto in nuova scheda) -->
   <p>
     <strong>Sito web:</strong>
     <a [href]="'https://' + website" target="_blank">{{ website }}</a>
   </p>
 
+  <!-- Bottone per aggiungere/rimuovere dai preferiti (emette addFavorite) -->
   <button class="favorite-button" (click)="onAddFavoriteClick()">
     Preferiti
   </button>

@@ -1,23 +1,22 @@
-import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { ComponentFixture, TestBed } from '@angular/core/testing'; // strumenti per testare componenti Angular
+import { HeaderComponent } from './header';                        // componente da testare
 
-import { HeaderComponent } from './header';
+describe('Header', () => {                                         // gruppo di test per HeaderComponent
+  let component: HeaderComponent;                                  // istanza del componente
+  let fixture: ComponentFixture<HeaderComponent>;                  // wrapper che contiene template + logica
 
-describe('Header', () => {
-  let component: HeaderComponent;
-  let fixture: ComponentFixture<HeaderComponent>;
-
-  beforeEach(async () => {
+  beforeEach(async () => {                                         // eseguito prima di ogni test
     await TestBed.configureTestingModule({
-      imports: [HeaderComponent]
+      imports: [HeaderComponent]                                   // import del componente standalone
     })
-    .compileComponents();
+    .compileComponents();                                           // compila template + component
 
-    fixture = TestBed.createComponent(HeaderComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture = TestBed.createComponent(HeaderComponent);            // crea istanza del componente
+    component = fixture.componentInstance;                         // riferimento alla classe del componente
+    fixture.detectChanges();                                       // avvia rilevamento modifiche Angular
   });
 
-  it('should create', () => {
-    expect(component).toBeTruthy();
+  it('should create', () => {                                      // test base: verifica creazione
+    expect(component).toBeTruthy();                                // il componente esiste?
   });
 });

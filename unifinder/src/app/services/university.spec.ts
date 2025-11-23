@@ -1,16 +1,15 @@
 import { TestBed } from '@angular/core/testing';
+import { UniversityService } from './university';                   // servizio da testare
 
-import { University } from './university';
-
-describe('University', () => {
-  let service: University;
+describe('University', () => {                                      // gruppo di test del servizio
+  let service: UniversityService;
 
   beforeEach(() => {
-    TestBed.configureTestingModule({});
-    service = TestBed.inject(University);
+    TestBed.configureTestingModule({});                             // modulo di test vuoto (usa provider root)
+    service = TestBed.inject(UniversityService);                    // ottiene il servizio da DI
   });
 
-  it('should be created', () => {
+  it('should be created', () => {                                   // test: il servizio viene creato?
     expect(service).toBeTruthy();
   });
 });

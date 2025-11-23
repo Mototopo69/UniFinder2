@@ -1,8 +1,8 @@
-/* ===== HERO (frase catchy centrata) ===== */
+/* Sezione hero con la frase principale */
 .hero {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: center;                           // centra il contenuto
   margin-top: 40px;
   padding: 0 16px;
   box-sizing: border-box;
@@ -12,55 +12,56 @@
   font-size: 2.2rem;
   font-weight: 700;
   text-align: center;
-  max-width: 900px;
+  max-width: 900px;                                  // limite di larghezza del testo
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
 .red {
-  color: #ff0000;
+  color: #ff0000;                                    // colore rosso per le parole evidenziate
 }
 
-/* ===== CARDS CONTAINER ===== */
+/* Contenitore delle card (griglia) */
 .cards-container {
   width: 100%;
-  max-width: 1200px;
-  margin: 40px auto 80px auto;
+  max-width: 1200px;                                 // larghezza massima della griglia
+  margin: 40px auto 80px auto;                       // centrata con margini sopra/sotto
   padding: 0 16px 40px;
   box-sizing: border-box;
 
   display: grid;
-  grid-template-columns: repeat(3, 1fr);
-  gap: 24px;
+  grid-template-columns: repeat(3, 1fr);             // 3 colonne uguali
+  gap: 24px;                                         // spazio tra le card
 }
 
-/* ===== RESPONSIVE ===== */
+/* Tablet: 2 card per riga */
 @media (max-width: 900px) {
   .cards-container {
-    grid-template-columns: repeat(2, 1fr); /* 2 per riga su tablet */
+    grid-template-columns: repeat(2, 1fr);           // 2 colonne
   }
 }
 
+/* Mobile: 1 card per riga */
 @media (max-width: 600px) {
   .cards-container {
-    grid-template-columns: repeat(1, 1fr); /* 1 per riga su mobile */
+    grid-template-columns: repeat(1, 1fr);           // 1 colonna
     gap: 16px;
   }
 }
 
-
-/* ===== PAGINAZIONE ===== */
+/* Controlli di paginazione */
 .pagination {
   width: 100%;
   display: flex;
-  justify-content: center;
+  justify-content: center;                           // centrati orizzontalmente
   align-items: center;
   gap: 16px;
   margin: 10px 0 60px 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
 }
 
+/* Bottoni della paginazione */
 .pagination button {
-  background-color: #0033a0;
+  background-color: #0033a0;                         // blu
   color: #ffffff;
   border: none;
   padding: 8px 14px;
@@ -71,20 +72,22 @@
   transition: background-color 0.2s ease;
 }
 
+/* Bottoni disabilitati (all'inizio o alla fine) */
 .pagination button:disabled {
-  background-color: #a0a0a0;
+  background-color: #a0a0a0;                         // grigio
   cursor: default;
 }
 
+/* Hover solo sui bottoni attivi */
 .pagination button:not(:disabled):hover {
-  background-color: #001f6b;
+  background-color: #001f6b;                         // blu più scuro
 }
 
 .page-info {
-  font-size: 14px;
+  font-size: 14px;                                   // dimensione testo info pagina
 }
 
-/* ===== RESPONSIVE BREAKPOINTS ===== */
+/* Adattamento hero e griglia per tablet */
 @media (max-width: 900px) {
   .hero h1 {
     font-size: 1.9rem;
@@ -95,6 +98,7 @@
   }
 }
 
+/* Adattamento hero per mobile */
 @media (max-width: 600px) {
   .hero {
     margin-top: 24px;
@@ -104,6 +108,8 @@
     font-size: 1.6rem;
   }
 }
+
+/* Messaggio "Nessuna università trovata" */
 .no-results {
   margin-top: 30px;
   text-align: center;

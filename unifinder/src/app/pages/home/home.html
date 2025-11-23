@@ -1,10 +1,14 @@
+<!-- HEADER -->
+<!-- Comunica eventi al componente padre (HomeComponent) -->
 <app-header
   (search)="onSearch($event)"
   (reset)="resetFilters()"
   (showFavorites)="onShowFavorites()"
-  (backHome)="onBackHome()">
+  (backHome)="onBackHome()"
+>
 </app-header>
 
+<!-- HERO SECTION: visibile solo se NON si stanno guardando i preferiti -->
 <section class="hero" *ngIf="!showingFavorites">
   <h1>
     <span class="red">Find</span> your future, one
@@ -12,33 +16,43 @@
   </h1>
 </section>
 
+<!-- LISTA CARD UNIVERSITÀ (o preferiti), con paginazione -->
 <section class="cards-container">
+
+  <!-- Ciclo che mostra le card della pagina corrente -->
   <app-university-card
     *ngFor="let uni of paginatedUniversities"
     [country]="uni.country"
     [domain]="uni.domain"
     [name]="uni.name"
     [website]="uni.website"
-    (addFavorite)="addToFavorites(uni)">
+    (addFavorite)="addToFavorites(uni)"
+  >
   </app-university-card>
+
 </section>
 
-<!-- 🔥 MESSAGGIO QUANDO NON CI SONO RISULTATI -->
+<!-- MESSAGGIO: nessun risultato trovato (solo nella vista normale) -->
 <div *ngIf="noResults && !showingFavorites" class="no-results">
   Nessuna università trovata.
 </div>
 
-<!-- PAGINAZIONE -->
+<!-- PAGINAZIONE: visibile solo se ci sono più elementi di una pagina -->
 <div class="pagination" *ngIf="currentList.length > pageSize">
+
+  <!-- Bottone pagina precedente -->
   <button (click)="prevPage()" [disabled]="page === 1">
     ‹ Precedente
   </button>
 
+  <!-- Info pagina corrente -->
   <span class="page-info">
     Pagina {{ page }} di {{ totalPages }}
   </span>
 
+  <!-- Bottone pagina successiva -->
   <button (click)="nextPage()" [disabled]="page === totalPages">
     Successiva ›
   </button>
+
 </div>

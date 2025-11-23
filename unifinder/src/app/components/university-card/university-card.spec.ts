@@ -1,23 +1,22 @@
 import { ComponentFixture, TestBed } from '@angular/core/testing';
+import { UniversityCardComponent } from './university-card';        // componente da testare
 
-import {UniversityCardComponent } from './university-card';
-
-describe('UniversityCard', () => {
+describe('UniversityCard', () => {                                  // gruppo di test
   let component: UniversityCardComponent;
   let fixture: ComponentFixture<UniversityCardComponent>;
 
   beforeEach(async () => {
     await TestBed.configureTestingModule({
-      imports: [UniversityCardComponent]
+      imports: [UniversityCardComponent]                             // import del componente standalone
     })
     .compileComponents();
 
-    fixture = TestBed.createComponent(UniversityCardComponent);
-    component = fixture.componentInstance;
-    fixture.detectChanges();
+    fixture = TestBed.createComponent(UniversityCardComponent);      // crea il componente
+    component = fixture.componentInstance;                           // ottiene la classe
+    fixture.detectChanges();                                         // aggiorna template
   });
 
-  it('should create', () => {
+  it('should create', () => {                                        // test semplice: esiste?
     expect(component).toBeTruthy();
   });
 });
